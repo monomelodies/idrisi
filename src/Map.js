@@ -1,5 +1,6 @@
 "use strict";
 
+const wm = new WeakMap();
 
 /**
  * @description
@@ -55,11 +56,11 @@ class controller {
         if (this.maxBounds !== undefined) {
             options.maxBounds = this.maxBounds;
         }
-        this.map = new mapboxgl.Map(options);
+        wm.set(this, new mapboxgl.Map(options));
     }
 
     getMap() {
-        return this.map;
+        return wm.get(this);
     }
 
 };
