@@ -17,7 +17,7 @@ class controller {
 };
 
 export default angular.module('idrisi.control.navigation', [])
-    .component('idrisiNavigation', {
+    .component('idrisiNavigationControl', {
         controller,
         require: {
             parent: '^^idrisiMap'
