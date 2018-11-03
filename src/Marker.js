@@ -1,33 +1,35 @@
 
 "use strict";
 
+const wm = new WeakMap();
+
 class controller {
 
-    constructor($element, $transclude) {
-        this._element = $element;
-        this._transclude = $transclude;
+    constructor($element) {
+        wm.set(this, $element);
     }
 
-    ['$onInit']() {
-        const transcluded = this._transclude();
+    ['$postLink']() {
+        //const transcluded = wm.get(this)();
         const options = {
             anchor: this.anchor || 'center',
             color: this.color || '#3fb1ce',
             draggable: !!this.draggable
         };
-        if (transcluded.length) {
-            options.element = transcluded[0];
+        const transcluded = wm.get(this)[0].children[0].children.length;
+        if (transcluded) {
+            options.element = wm.get(this)[0];
         }
         if (this.offset) {
             options.offset = this.offset;
         }
         const marker = new mapboxgl.Marker(options);
         marker.setLngLat(this.lngLat);
-        marker.addTo(this.parent.getMap());
+        marker.addTo(this.parent.map);
     }
 };
 
-controller.$inject = ['$element', '$transclude'];
+controller.$inject = ['$element'];
 
 export default angular.module('idrisi.marker', [])
     .component('idrisiMarker', {
@@ -41,7 +43,7 @@ export default angular.module('idrisi.marker', [])
             draggable: '<'
         },
         transclude: true,
-        template: '<div></div>'
+        template: '<ng-transclude></ng-transclude>'
     })
     .name;
 
