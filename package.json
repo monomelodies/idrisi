@@ -1,0 +1,28 @@
+{
+  "name": "idrisi",
+  "version": "0.1.0",
+  "description": "MapboxGL directives for AngularJS",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "karma start",
+    "build": "babel src --out-dir lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@barabas.sensimedia.nl/home/git/libraries/monomelodies/idrisi"
+  },
+  "keywords": [
+    "MaboxGL",
+    "AngularJS"
+  ],
+  "author": "Marijn Ophorst <marijn@monomelodies.nl>",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/plugin-transform-async-to-generator": "^7.1.0",
+    "@babel/plugin-transform-runtime": "^7.1.0",
+    "@babel/polyfill": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/runtime": "^7.1.2"
+  }
+}
