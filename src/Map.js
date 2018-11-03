@@ -1,6 +1,6 @@
 "use strict";
 
-import mapboxgl from 'mapbox-gl';
+import { Map } from 'mapbox-gl';
 
 const mapWm = new WeakMap();
 const elementWm = new WeakMap();
@@ -17,7 +17,6 @@ class controller {
     }
 
     ['$onInit']() {
-        mapboxgl.accessToken = this.token;
         const options = {
             container: this.id || elementWm.get(this)[0],
             minZoom: parseInt(this.minZoom || 0),
@@ -59,7 +58,7 @@ class controller {
         if (this.maxBounds !== undefined) {
             options.maxBounds = this.maxBounds;
         }
-        mapWm.set(this, new mapboxgl.Map(options));
+        mapWm.set(this, new Map(options));
     }
 
     get map() {
@@ -74,7 +73,6 @@ export default angular.module('idrisi.map', [])
     .component('idrisiMap', {
         controller,
         bindings: {
-            token: '@accessToken',
             id: '@',
             minZoom: '@',
             maxZoom: '@',
