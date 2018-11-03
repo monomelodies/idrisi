@@ -8,10 +8,11 @@ const wm = new WeakMap();
 class controller {
 
     ['$onInit']() {
-        wm.set(this, new mapboxgl.NavigationControler({
+        wm.set(this, new mapboxgl.NavigationController({
             showCompass: this.showCompass === undefined ? true : !!this.showCompass,
             showZoom: this.showZoom === undefined ? true : !!this.showZoom
         }));
+        this.parent.map.addControl(wm.get(this), this.location || 'top-right');
     }
 };
 
@@ -23,7 +24,8 @@ export default angular.module('idrisi.control.navigation', [])
         },
         bindings: {
             showCompass: '<',
-            showZoom: '<'
+            showZoom: '<',
+            'location': '@'
         }
     })
     .name;
