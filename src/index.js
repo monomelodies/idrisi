@@ -1,12 +1,10 @@
 
 "use strict";
 
-import mapboxgl from 'mapbox-gl';
-window.mapboxgl = mapboxgl;
+import Map from './Map';
+import Marker from './Marker';
+import Control from './Control';
 
-import map from './Map';
-import marker from './Marker';
-
-export default angular.module('idrisi', [map, marker])
+export default angular.module('idrisi', [Map, Marker, Control])
     .name;
 
