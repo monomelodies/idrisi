@@ -8,7 +8,7 @@ const wm = new WeakMap();
 class controller {
 
     ['$onInit']() {
-        wm.set(this, new mapboxgl.NavigationController({
+        wm.set(this, new mapboxgl.NavigationControl({
             showCompass: this.showCompass === undefined ? true : !!this.showCompass,
             showZoom: this.showZoom === undefined ? true : !!this.showZoom
         }));
