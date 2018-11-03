@@ -1,6 +1,8 @@
 
 "use strict";
 
+import mapboxgl from 'mapbox-gl';
+
 const wm = new WeakMap();
 
 class controller {
