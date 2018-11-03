@@ -1,6 +1,7 @@
 "use strict";
 
-const wm = new WeakMap();
+const mapWm = new WeakMap();
+const elementWm = new WeakMap();
 
 /**
  * @description
@@ -10,13 +11,13 @@ const wm = new WeakMap();
 class controller {
 
     constructor($element) {
-        this._element = $element;
+        elementWm.set(this, $element);
     }
 
     ['$onInit']() {
         mapboxgl.accessToken = this.token;
         const options = {
-            container: this.id || this._element[0],
+            container: this.id || elementWm.get(this)[0],
             minZoom: parseInt(this.minZoom || 0),
             maxZoom: parseInt(this.maxZoom === undefined ? 22 : this.maxZoom),
             style: this.style || 'mapbox://styles/mapbox/streets-v',
@@ -56,11 +57,11 @@ class controller {
         if (this.maxBounds !== undefined) {
             options.maxBounds = this.maxBounds;
         }
-        wm.set(this, new mapboxgl.Map(options));
+        mapWm.set(this, new mapboxgl.Map(options));
     }
 
-    getMap() {
-        return wm.get(this);
+    get map() {
+        return mapWm.get(this);
     }
 
 };
