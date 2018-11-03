@@ -1,5 +1,7 @@
 "use strict";
 
+import mapboxgl from 'mapbox-gl';
+
 const mapWm = new WeakMap();
 const elementWm = new WeakMap();
 
