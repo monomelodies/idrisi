@@ -1,6 +1,11 @@
-
 "use strict";
 
+
+/**
+ * @description
+ *
+ * AngularJS component providing an interface to the `mapboxgl.Map` object.
+ */
 class controller {
 
     constructor($element) {
@@ -10,7 +15,7 @@ class controller {
     ['$onInit']() {
         mapboxgl.accessToken = this.token;
         const options = {
-            container: this.id || this._element,
+            container: this.id || this._element[0],
             minZoom: parseInt(this.minZoom || 0),
             maxZoom: parseInt(this.maxZoom === undefined ? 22 : this.maxZoom),
             style: this.style || 'mapbox://styles/mapbox/streets-v',
@@ -51,6 +56,10 @@ class controller {
             options.maxBounds = this.maxBounds;
         }
         this.map = new mapboxgl.Map(options);
+    }
+
+    getMap() {
+        return this.map;
     }
 
 };
