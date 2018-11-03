@@ -1,14 +1,14 @@
 
 "use strict";
 
-import mapboxgl from 'mapbox-gl';
+import { ScaleControl } from 'mapbox-gl';
 
 const wm = new WeakMap();
 
 class controller {
 
     ['$onInit']() {
-        wm.set(this, new mapboxgl.ScaleControl({
+        wm.set(this, new ScaleControl({
             maxWidth: this.maxWidth == undefined ? 100 : parseInt(this.maxWidth),
             unit: this.unit || 'metric'
         }));
