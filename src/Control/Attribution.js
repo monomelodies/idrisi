@@ -1,7 +1,7 @@
 
 "use strict";
 
-import mapboxgl from 'mapboxgl';
+import { AttributionControl } from 'mapbox-gl';
 
 class controller {
 
@@ -13,7 +13,7 @@ class controller {
         if (this.customAttributions) {
             options.customAttributions = this.customAttributions;
         }
-        this.parent.map.addControl(new mapboxgl.AttributionControl(options), this.location || 'top-right');
+        this.parent.map.addControl(new AttributionControl(options), this.location || 'top-right');
     }
 
 };
