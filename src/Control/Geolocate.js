@@ -1,14 +1,14 @@
 
 "use strict";
 
-import mapboxgl from 'mapbox-gl';
+import { GeolocateControl } from 'mapbox-gl';
 
 const wm = new WeakMap();
 
 class controller {
 
     ['$onInit']() {
-        wm.set(this, new mapboxgl.GeolocateControl({
+        wm.set(this, new GeolocateControl({
             positionOptions: this.positionOptions || {enableHighAccuracy: false, timeout: 6000},
             fitBoundsOptions: this.fitBoundsOptions || {maxZoom: 15},
             trackUserLocation: !!this.trackUserLocation,
