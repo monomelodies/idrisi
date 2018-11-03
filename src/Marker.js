@@ -1,7 +1,7 @@
 
 "use strict";
 
-import mapboxgl from 'mapbox-gl';
+import { Marker } from 'mapbox-gl';
 
 const wm = new WeakMap();
 
@@ -25,7 +25,7 @@ class controller {
         if (this.offset) {
             options.offset = this.offset;
         }
-        const marker = new mapboxgl.Marker(options);
+        const marker = new Marker(options);
         marker.setLngLat(this.lngLat);
         marker.addTo(this.parent.map);
     }
