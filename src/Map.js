@@ -21,7 +21,7 @@ class controller {
             container: this.id || elementWm.get(this)[0],
             minZoom: parseInt(this.minZoom || 0),
             maxZoom: parseInt(this.maxZoom === undefined ? 22 : this.maxZoom),
-            style: this.style || 'mapbox://styles/mapbox/streets-v',
+            style: this.style || 'mapbox://styles/mapbox/streets-v10',
             hash: !!(this.hash || false),
             interactive: this.interactive === undefined ? true : !!this.interactive,
             bearingSnap: parseInt(this.bearingSnap === undefined ? 7 : this.bearingSnap),
