@@ -61,6 +61,11 @@ class controller {
         mapWm.set(this, new Map(options));
     }
 
+    ['$onDestory']() {
+        elementWm.delete(this);
+        mapWm.delete(this);
+    }
+
     get map() {
         return mapWm.get(this);
     }
