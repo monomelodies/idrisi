@@ -59,7 +59,9 @@ class controller {
             options.maxBounds = this.maxBounds;
         }
         mapWm.set(this, new Map(options));
-        this.onMapLoaded({map: mapWm.get(this)});
+        if (this.onMapLoaded) {
+            this.onMapLoaded({map: mapWm.get(this)});
+        }
     }
 
     ['$onDestory']() {
