@@ -29,6 +29,11 @@ class controller {
         marker.setLngLat(this.lngLat);
         marker.addTo(this.parent.map);
     }
+
+    ['$onDestroy']() {
+        wm.delete(this);
+    }
+
 };
 
 controller.$inject = ['$element'];
