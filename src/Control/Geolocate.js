@@ -16,6 +16,11 @@ class controller {
         }));
         this.parent.map.addControl(wm.get(this), this.location || 'top-right');
     }
+
+    ['$onDestroy']() {
+        wm.delete(this);
+    }
+
 };
 
 export default angular.module('idrisi.control.geolocate', [])
