@@ -64,7 +64,7 @@ class controller {
         }
     }
 
-    ['$onDestory']() {
+    ['$onDestroy']() {
         elementWm.delete(this);
         mapWm.delete(this);
     }
