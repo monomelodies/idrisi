@@ -73,6 +73,18 @@ class controller {
         return mapWm.get(this);
     }
 
+    contains(lngLat) {
+        const bounds = this.map.getBounds();
+        const southWest = bounds.getSouthWest().toArray();
+        const northEast = bounds.getNorthEast().toArray();
+        console.log(lngLat);
+        if (angular.isArray(lngLat)) {
+            lngLat = new LngLat(lngLat[0], lngLat[1]);
+            console.log(lngLat);
+        }
+        return true;
+    }
+
 };
 
 controller.$inject = ['$element'];
