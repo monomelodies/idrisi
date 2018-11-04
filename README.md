@@ -32,6 +32,16 @@ angular.module('myModule', [idrisi])
     ;
 ```
 
+You'll also need to set your `accessToken` that you got from the MapboxGL
+website. The token is implemented as an angular constant which you should set
+on your main application (or whatever module uses Idrisi):
+
+```js
+angular.module('myModule', [idrisi])
+    .constant('accessToken', 'your access token')
+    ;
+```
+
 ## Philosophy
 All components are prefixed with `idrisi-`, followed by the name of the MapboxGL
 class in the custom AngularJS conversion (camelCase to camel-case). All
@@ -48,4 +58,9 @@ The main component, and one that most other components will require.
 ### `idrisi-marker`
 A marker on the map. If transcluded content is supplied, it is used as the
 marker instead of the default blueish pin.
+
+### `idrisi-popup`
+A popup for a marker. Should be contained in `idrisi-marker`. Adding the
+necessary `ng-if` or whatever is up to the implementor. All contents of the
+`popup` component are transcluded and used as HTML for inside the popup.
 
