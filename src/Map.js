@@ -59,6 +59,7 @@ class controller {
             options.maxBounds = this.maxBounds;
         }
         mapWm.set(this, new Map(options));
+        this.onMapLoaded({map: mapWm.get(this)});
     }
 
     ['$onDestory']() {
@@ -112,7 +113,15 @@ export default angular.module('idrisi.map', [])
             transformRequest: '&',
             collectResourceTiming: '<',
             fadeDuration: '@',
-            crossSourceCollisions: '<'
+            crossSourceCollisions: '<',
+            /**
+             * @description
+             *
+             * Custom binding called when the map is loaded. This is to allow
+             * calling controllers to interact with it. The map is passed as
+             * single argument `map`.
+             */
+            on-map-loaded: '&'
         }
     })
     .name;
