@@ -46,7 +46,7 @@ export default angular.module('idrisi.popup', [])
     .component('idrisiPopup', {
         controller,
         require: {
-            parent: '^^idrissiMarker'
+            parent: '^^idrisiMarker'
         },
         transclude: true,
         bindings: {
