@@ -29,7 +29,7 @@ class controller {
             options.className = this.className;
         }
         popupWm.set(this, new Popup(options))
-        scopeWm.get(this).apply(() => popupWm.get(this).setLngLat(this.lngLat).setHTML(elementWm.get(this).html()).addTo(this.parent.parent.map));
+        scopeWm.get(this).$apply(() => popupWm.get(this).setLngLat(this.lngLat).setHTML(elementWm.get(this).html()).addTo(this.parent.parent.map));
     }
 
     ['$destroy']() {
