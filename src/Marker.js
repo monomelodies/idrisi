@@ -27,7 +27,13 @@ class controller {
         }
         const marker = new Marker(options);
         marker.setLngLat(this.lngLat);
-        marker.addTo(this.parent.map);
+        this.parent.map.on('render', () => {
+            if (this.parent.map.contains(this.lngLat)) {
+                marker.addTo(this.parent.map);
+            } else {
+                marker.remove();
+            }
+        });
     }
 
     ['$onDestroy']() {
