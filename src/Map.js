@@ -3,15 +3,17 @@
 import { Map } from 'mapbox-gl';
 import { LngLat } from 'mapbox-gl';
 
-Map.prototype.contains = function (lngLat) {
-    const bounds = this.getBounds();
-    const southWest = bounds.getSouthWest();
-    const northEast = bounds.getNorthEast();
-    if (angular.isArray(lngLat)) {
-        lngLat = new LngLat(lngLat[0], lngLat[1]);
-    }
-    return lngLat.lng >= southWest.lng && lngLat.lat >= southWest.lat && lngLat.lng <= northEast.lng && lngLat.lat <= northEast.lat;
-};
+if (!Map.prototype.contains) {
+    Map.prototype.contains = function (lngLat) {
+        const bounds = this.getBounds();
+        const southWest = bounds.getSouthWest();
+        const northEast = bounds.getNorthEast();
+        if (angular.isArray(lngLat)) {
+            lngLat = new LngLat(lngLat[0], lngLat[1]);
+        }
+        return lngLat.lng >= southWest.lng && lngLat.lat >= southWest.lat && lngLat.lng <= northEast.lng && lngLat.lat <= northEast.lat;
+    };
+}
 
 const mapWm = new WeakMap();
 const elementWm = new WeakMap();
@@ -72,8 +74,8 @@ class controller {
             options.maxBounds = this.maxBounds;
         }
         mapWm.set(this, new Map(options));
+        mapWm.get(this).on('render', () => scopeWm.get(this).$apply());
         if (this.onMapLoaded) {
-            mapWm.get(this).on('render', () => scopeWm.get(this).$apply());
             this.onMapLoaded({map: mapWm.get(this)});
         }
     }
