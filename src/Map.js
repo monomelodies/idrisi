@@ -1,9 +1,21 @@
 "use strict";
 
 import { Map } from 'mapbox-gl';
+import { LngLat } from 'mapbox-gl';
+
+Map.prototype.contains = function (lngLat) {
+    const bounds = this.getBounds();
+    const southWest = bounds.getSouthWest();
+    const northEast = bounds.getNorthEast();
+    if (angular.isArray(lngLat)) {
+        lngLat = new LngLat(lngLat[0], lngLat[1]);
+    }
+    return lngLat.lng >= southWest.lng && lngLat.lat >= southWest.lat && lngLat.lng <= northEast.lng && lngLat.lat <= northEast.lat;
+};
 
 const mapWm = new WeakMap();
 const elementWm = new WeakMap();
+const scopeWm = new WeakMap();
 
 /**
  * @description
@@ -12,8 +24,9 @@ const elementWm = new WeakMap();
  */
 class controller {
 
-    constructor($element) {
+    constructor($element, $scope) {
         elementWm.set(this, $element);
+        scopeWm.set(this, $scope);
     }
 
     ['$onInit']() {
@@ -60,6 +73,7 @@ class controller {
         }
         mapWm.set(this, new Map(options));
         if (this.onMapLoaded) {
+            mapWm.get(this).on('render', () => scopeWm.get(this).$apply());
             this.onMapLoaded({map: mapWm.get(this)});
         }
     }
@@ -73,21 +87,9 @@ class controller {
         return mapWm.get(this);
     }
 
-    contains(lngLat) {
-        const bounds = this.map.getBounds();
-        const southWest = bounds.getSouthWest().toArray();
-        const northEast = bounds.getNorthEast().toArray();
-        console.log(lngLat);
-        if (angular.isArray(lngLat)) {
-            lngLat = new LngLat(lngLat[0], lngLat[1]);
-            console.log(lngLat);
-        }
-        return true;
-    }
-
 };
 
-controller.$inject = ['$element'];
+controller.$inject = ['$element', '$scope'];
 
 export default angular.module('idrisi.map', [])
     .component('idrisiMap', {
