@@ -149,7 +149,7 @@ export default angular.module('idrisi.map', [])
              * calling controllers to interact with it. The map is passed as
              * single argument `map`.
              */
-            onMapLoaded: '&'
+            onMapLoaded: '&',
             /**
              * @description
              *
