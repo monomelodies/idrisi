@@ -89,6 +89,11 @@ class controller {
         return mapWm.get(this);
     }
 
+    set map(map) {
+        console.log('setter');
+        mapWm.set(this, map);
+    }
+
 };
 
 controller.$inject = ['$element', '$scope'];
