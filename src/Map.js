@@ -73,10 +73,16 @@ class controller {
         if (this.maxBounds !== undefined) {
             options.maxBounds = this.maxBounds;
         }
-        mapWm.set(this, new Map(options));
-        mapWm.get(this).on('render', () => scopeWm.get(this).$apply());
-        if (this.onMapLoaded) {
-            this.onMapLoaded({map: mapWm.get(this)});
+        try {
+            mapWm.set(this, new Map(options));
+            mapWm.get(this).on('render', () => scopeWm.get(this).$apply());
+            if (this.onMapLoaded) {
+                this.onMapLoaded({map: mapWm.get(this)});
+            }
+        } catch (error) {
+            if (this.onWebglInitializationFailure) {
+                this.onWebglInitializationFailure({error});
+            }
         }
     }
 
@@ -90,7 +96,6 @@ class controller {
     }
 
     set map(map) {
-        console.log('setter');
         mapWm.set(this, map);
     }
 
@@ -145,6 +150,14 @@ export default angular.module('idrisi.map', [])
              * single argument `map`.
              */
             onMapLoaded: '&'
+            /**
+             * @description
+             *
+             * Custom error called when WebGL could not be initialized. Allows
+             * for graceful error handling in the application. The error is
+             * passed as argument `error`.
+             */
+            onWebglInitializationFailure: '&'
         }
     })
     .name;
