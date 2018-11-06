@@ -8,11 +8,18 @@ const wm = new WeakMap();
 class controller {
 
     ['$onInit']() {
-        wm.set(this, new NavigationControl({
-            showCompass: this.showCompass === undefined ? true : !!this.showCompass,
-            showZoom: this.showZoom === undefined ? true : !!this.showZoom
-        }));
-        this.parent.map.addControl(wm.get(this), this.location || 'top-right');
+        try {
+            wm.set(this, new NavigationControl({
+                showCompass: this.showCompass === undefined ? true : !!this.showCompass,
+                showZoom: this.showZoom === undefined ? true : !!this.showZoom
+            }));
+            this.parent.map.addControl(wm.get(this), this.location || 'top-right');
+        } catch (error) {
+            if (this.onWebglInitializationFailed) {
+                this.onWebglInitializationFailed({error});
+            }
+        }
+        }
     }
 
     ['$onDestroy']() {
@@ -30,7 +37,8 @@ export default angular.module('idrisi.control.navigation', [])
         bindings: {
             showCompass: '<',
             showZoom: '<',
-            'location': '@'
+            'location': '@',
+            onWebglInitializationFailed: '&'
         }
     })
     .name;
