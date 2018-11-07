@@ -5,48 +5,62 @@ import { Popup } from 'mapbox-gl';
 
 const elementWm = new WeakMap();
 const popupWm = new WeakMap();
-const domWm = new WeakMap();
+const openWm = new WeakMap();
+const scopeWm = new WeakMap();
 
 class controller {
 
-    constructor($element) {
+    constructor($element, $scope) {
+        $element.css({display: 'none'});
         elementWm.set(this, $element);
+        openWm.set(this, false);
+        scopeWm.set(this, $scope);
+    }
+
+    ['$onInit']() {
+        const options = {
+            closeButton: this.closeButton === undefined ? true : !!this.closeButton,
+            closeOnClick: this.closeOnClick == undefined ? true : !!this.closeOnClick
+        };
+        if (this.anchor) {
+            options.anchor = this.anchor;
+        }
+        if (this.offset) {
+            options.offset = this.offset;
+        }
+        if (this.className) {
+            options.className = this.className;
+        }
+        const popup = new Popup(options);
+        popup.setLngLat(this.parent.lngLat)
+        popup.on('close', () => {
+            openWm.set(this, false);
+            if (this.onClose) {
+                scopeWm.get(this).$apply(() => this.onClose());
+            }
+        });
+        popupWm.set(this, popup);
     }
 
     set opened(newvalue) {
-        if (newvalue) {
-            const options = {
-                closeButton: this.closeButton === undefined ? true : !!this.closeButton,
-                closeOnClick: this.closeOnClick == undefined ? true : !!this.closeOnClick
-            };
-            if (this.anchor) {
-                options.anchor = this.anchor;
+        const open = openWm.get(this);
+        const popup = popupWm.get(this);
+        if (popup) {
+            if (newvalue && !open) {
+                popup.setHTML(elementWm.get(this)[0].firstChild.innerHTML);
+                popup.addTo(this.parent.parent.map);
+            } else if (open && !newvalue) {
+                popup.remove();
+                if (this.onClose) {
+                    scopeWm.get(this).$apply(() => this.onClose());
+                }
             }
-            if (this.offset) {
-                options.offset = this.offset;
-            }
-            if (this.className) {
-                options.className = this.className;
-            }
-            popupWm.set(this, new Popup(options));
-            const popup = new Popup(options);
-            popup.setLngLat(this.parent.lngLat)
-                .setDOMContent(domWm.get(this));
-            popup.addTo(this.parent.parent.map);
-            console.log(popup);
-            popupWm.set(this, popup);
-        } else if (popupWm.get(this)) {
-            popupWm.get(this).remove();
         }
+        openWm.set(this, newvalue);
     }
 
     get opened() {
-        const popup = popupWm.get(this);
-        return popup && popup.isOpen();
-    }
-
-    ['$postLink']() {
-        domWm.set(this, elementWm.get(this)[0].firstChild);
+        return openWm.get(this);
     }
 
     ['$onDestroy']() {
@@ -56,7 +70,7 @@ class controller {
 
 };
 
-controller.$inject = ['$element'];
+controller.$inject = ['$element', '$scope'];
 
 export default angular.module('idrisi.popup', [])
     .component('idrisiPopup', {
@@ -76,7 +90,11 @@ export default angular.module('idrisi.popup', [])
              * Custom binding: true to show the popup. Using e.g. `ng-if` on the
              * component trips up MapboxGL.
              */
-            opened: '<'
+            opened: '<',
+            /**
+             * Custom callback triggered on popup close. Useful for cleanup.
+             */
+            onClose: '&'
         }
     })
     .name;
