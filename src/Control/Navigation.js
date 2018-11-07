@@ -19,7 +19,6 @@ class controller {
                 this.onWebglInitializationFailed({error});
             }
         }
-        }
     }
 
     ['$onDestroy']() {
