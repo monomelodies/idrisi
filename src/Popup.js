@@ -44,6 +44,7 @@ class controller {
 
     ['$postLink']() {
         if (this.opened) {
+            const popup = popupWm.get(this);
             popup.setHTML(elementWm.get(this)[0].firstChild.innerHTML);
             popup.addTo(this.parent.parent.map);
         }
