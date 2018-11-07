@@ -40,6 +40,10 @@ class controller {
             }
         });
         popupWm.set(this, popup);
+        if (this.opened) {
+            popup.setHTML(elementWm.get(this)[0].firstChild.innerHTML);
+            popup.addTo(this.parent.parent.map);
+        }
     }
 
     set opened(newvalue) {
