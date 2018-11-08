@@ -104,7 +104,7 @@ class controller {
 
 };
 
-controller.$inject = ['$element', '$scope'];
+controller.$inject = ['$element'];
 
 export default angular.module('idrisi.map', [])
     .component('idrisiMap', {
