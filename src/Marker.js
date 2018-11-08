@@ -9,6 +9,8 @@ class controller {
 
     constructor($element) {
         wm.set(this, $element);
+        // This is needed to prevent clickOnClose immediately firing for a popup.
+        $element.on('click', event => event.stopPropagation());
     }
 
     ['$postLink']() {
