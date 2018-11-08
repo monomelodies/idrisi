@@ -6,15 +6,13 @@ import { Popup } from 'mapbox-gl';
 const elementWm = new WeakMap();
 const popupWm = new WeakMap();
 const openWm = new WeakMap();
-const scopeWm = new WeakMap();
 
 class controller {
 
-    constructor($element, $scope) {
+    constructor($element) {
         $element.css({display: 'none'});
         elementWm.set(this, $element);
         openWm.set(this, false);
-        scopeWm.set(this, $scope);
     }
 
     ['$onInit']() {
@@ -36,7 +34,7 @@ class controller {
         popup.on('close', () => {
             openWm.set(this, false);
             if (this.onClose) {
-                scopeWm.get(this).$apply(() => this.onClose());
+                this.onClose();
             }
         });
         popupWm.set(this, popup);
@@ -60,7 +58,7 @@ class controller {
             } else if (open && !newvalue) {
                 popup.remove();
                 if (this.onClose) {
-                    scopeWm.get(this).$apply(() => this.onClose());
+                    this.onClose();
                 }
             }
         }
@@ -74,6 +72,7 @@ class controller {
     ['$onDestroy']() {
         elementWm.delete(this);
         popupWm.delete(this);
+        openWm.delete(this);
     }
 
 };
