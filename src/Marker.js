@@ -3,12 +3,14 @@
 
 import { Marker } from 'mapbox-gl';
 
-const wm = new WeakMap();
+const elementWm = new WeakMap();
+const scopeWm = new WeakMap();
 
 class controller {
 
-    constructor($element) {
-        wm.set(this, $element);
+    constructor($element, $scope) {
+        elementWm.set(this, $element);
+        scopeWm.set(this, $scope);
         // This is needed to prevent clickOnClose immediately firing for a popup.
         $element.on('click', event => event.stopPropagation());
     }
@@ -20,15 +22,16 @@ class controller {
             color: this.color || '#3fb1ce',
             draggable: !!this.draggable
         };
-        const transcluded = wm.get(this)[0].children[0].children.length;
+        const transcluded = elementWm.get(this)[0].children[0].children.length;
         if (transcluded) {
-            options.element = wm.get(this)[0];
+            options.element = elementWm.get(this)[0];
         }
         if (this.offset) {
             options.offset = this.offset;
         }
         const marker = new Marker(options);
         marker.setLngLat(this.lngLat);
+        scopeWm.get(this).$watch('$ctrl.lngLat', newvalue => marker.setLngLat(newvalue));
         this.parent.map.on('render', () => {
             if (this.parent.map.contains(this.lngLat)) {
                 marker.addTo(this.parent.map);
@@ -39,7 +42,8 @@ class controller {
     }
 
     ['$onDestroy']() {
-        wm.delete(this);
+        elementWm.delete(this);
+        scopeWm.delete(this);
     }
 
 };
