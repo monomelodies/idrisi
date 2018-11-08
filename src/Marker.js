@@ -5,6 +5,7 @@ import { Marker } from 'mapbox-gl';
 
 const elementWm = new WeakMap();
 const scopeWm = new WeakMap();
+const onmapWm = new WeakMap();
 
 class controller {
 
@@ -31,12 +32,16 @@ class controller {
         }
         const marker = new Marker(options);
         marker.setLngLat(this.lngLat);
+        onmapWM.set(this, false);
         scopeWm.get(this).$watch('$ctrl.lngLat', newvalue => marker.setLngLat(newvalue));
         this.parent.map.on('render', () => {
-            if (this.parent.map.contains(this.lngLat)) {
+            const contains = this.parent.map.contains(this.lngLat);
+            if (contains && !onmapWm.get(this)) {
                 marker.addTo(this.parent.map);
-            } else {
+                onmapWm.set(this, true);
+            } else if (!contains && onmapWm.get(this)) {
                 marker.remove();
+                onmapWm.set(this, false);
             }
         });
     }
@@ -44,6 +49,7 @@ class controller {
     ['$onDestroy']() {
         elementWm.delete(this);
         scopeWm.delete(this);
+        onmapWm.delete(this);
     }
 
 };
