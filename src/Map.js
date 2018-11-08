@@ -29,6 +29,9 @@ class controller {
     constructor($element, $scope) {
         elementWm.set(this, $element);
         scopeWm.set(this, $scope);
+        $scope.$watch('$ctrl.center', newvalue => {
+            mapWm.get(this).setCenter(newvalue);
+        });
     }
 
     ['$onInit']() {
