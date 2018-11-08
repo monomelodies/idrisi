@@ -32,7 +32,7 @@ class controller {
         }
         const marker = new Marker(options);
         marker.setLngLat(this.lngLat);
-        onmapWM.set(this, false);
+        onmapWm.set(this, false);
         scopeWm.get(this).$watch('$ctrl.lngLat', newvalue => marker.setLngLat(newvalue));
         this.parent.map.on('render', () => {
             const contains = this.parent.map.contains(this.lngLat);
