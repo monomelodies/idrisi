@@ -44,6 +44,15 @@ class controller {
                 onmapWm.set(this, false);
             }
         });
+        if (this.onDragstart) {
+            marker.on('dragstart', () => this.onDragstart());
+        }
+        if (this.onDrag) {
+            marker.on('drag', () => this.onDrag());
+        }
+        if (this.onDragend) {
+            marker.on('dragend', () => this.onDragend());
+        }
     }
 
     ['$onDestroy']() {
@@ -65,7 +74,10 @@ export default angular.module('idrisi.marker', [])
         bindings: {
             lngLat: '<',
             color: '@',
-            draggable: '<'
+            draggable: '<',
+            onDragstart: '&',
+            onDrag: '&',
+            onDragend: '&'
         },
         transclude: true,
         template: '<ng-transclude></ng-transclude>'
