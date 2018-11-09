@@ -78,11 +78,11 @@ class controller {
             mapWm.set(this, map);
             const $scope = scopeWm.get(this);
             map.on('render', () => $scope.$apply());
-            $scope.$watch('$ctrl.center', newvalue => map.setCenter(newvalue));
-            $scope.$watch('$ctrl.minZoom', newvalue => map.setMinZoom(newvalue));
-            $scope.$watch('$ctrl.maxZoom', newvalue => map.setMaxZoom(newvalue));
-            $scope.$watch('$ctrl.maxBounds', newvalue => map.setMaxBounds(newvalue));
-            $scope.$watch('$ctrl.style', newvalue => map.setStyle(newvalue));
+            $scope.$watch('$ctrl.center', newvalue => newvalue && map.setCenter(newvalue));
+            $scope.$watch('$ctrl.minZoom', newvalue => newvalue && map.setMinZoom(newvalue));
+            $scope.$watch('$ctrl.maxZoom', newvalue => newvalue && map.setMaxZoom(newvalue));
+            $scope.$watch('$ctrl.maxBounds', newvalue => newvalue && map.setMaxBounds(newvalue));
+            $scope.$watch('$ctrl.style', newvalue => newvalue && map.setStyle(newvalue));
             if (this.onMapLoaded) {
                 this.onMapLoaded({map: map});
             }
