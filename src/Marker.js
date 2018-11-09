@@ -45,13 +45,13 @@ class controller {
             }
         });
         if (this.onDragstart) {
-            marker.on('dragstart', () => this.onDragstart());
+            marker.on('dragstart', () => this.onDragstart({marker}));
         }
         if (this.onDrag) {
-            marker.on('drag', () => this.onDrag());
+            marker.on('drag', () => this.onDrag({marker}));
         }
         if (this.onDragend) {
-            marker.on('dragend', () => this.onDragend());
+            marker.on('dragend', () => this.onDragend({marker}));
         }
     }
 
@@ -75,6 +75,9 @@ export default angular.module('idrisi.marker', [])
             lngLat: '<',
             color: '@',
             draggable: '<',
+            /**
+             * Event handlers. The marker is passed as "marker".
+             */
             onDragstart: '&',
             onDrag: '&',
             onDragend: '&'
