@@ -120,22 +120,16 @@ class controller {
         if (this.maxBounds !== undefined) {
             options.maxBounds = this.maxBounds;
         }
-        try {
-            const map = new Map(options);
-            mapWm.set(this, map);
-            const $scope = scopeWm.get(this);
-            map.on('render', () => $scope.$apply());
-            $scope.$watch('$ctrl.center', newvalue => newvalue && map.setCenter(newvalue));
-            $scope.$watch('$ctrl.minZoom', newvalue => newvalue && map.setMinZoom(newvalue));
-            $scope.$watch('$ctrl.maxZoom', newvalue => newvalue && map.setMaxZoom(newvalue));
-            $scope.$watch('$ctrl.maxBounds', newvalue => newvalue && map.setMaxBounds(newvalue));
-            $scope.$watch('$ctrl.style', newvalue => newvalue && map.setStyle(newvalue));
-            proxyEvents.call(this, 'map', map, events);
-        } catch (error) {
-            if (this.onWebglInitializationFailure) {
-                this.onWebglInitializationFailure({error});
-            }
-        }
+        const map = new Map(options);
+        mapWm.set(this, map);
+        const $scope = scopeWm.get(this);
+        map.on('render', () => $scope.$apply());
+        $scope.$watch('$ctrl.center', newvalue => newvalue && map.setCenter(newvalue));
+        $scope.$watch('$ctrl.minZoom', newvalue => newvalue && map.setMinZoom(newvalue));
+        $scope.$watch('$ctrl.maxZoom', newvalue => newvalue && map.setMaxZoom(newvalue));
+        $scope.$watch('$ctrl.maxBounds', newvalue => newvalue && map.setMaxBounds(newvalue));
+        $scope.$watch('$ctrl.style', newvalue => newvalue && map.setStyle(newvalue));
+        proxyEvents.call(this, 'map', map, events);
     }
 
     ['$onDestroy']() {
@@ -194,14 +188,6 @@ export default angular.module('idrisi.map', [])
             collectResourceTiming: '<',
             fadeDuration: '@',
             crossSourceCollisions: '<',
-            /**
-             * @description
-             *
-             * Custom error called when WebGL could not be initialized. Allows
-             * for graceful error handling in the application. The error is
-             * passed as argument `error`.
-             */
-            onWebglInitializationFailure: '&'
         }, events);
     })
     .name;
