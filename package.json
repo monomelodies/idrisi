@@ -24,6 +24,11 @@
   ],
   "license": "MIT",
   "devDependencies": {
+    "angular": "^1.7.5",
+    "angular-aria": "^1.7.5",
+    "angular-google-chart": "^0.1.0",
+    "angular-material": "^1.1.10",
+    "angular-mocks": "^1.7.5",
     "@babel/cli": "^7.1.2",
     "@babel/core": "^7.1.2",
     "@babel/plugin-transform-async-to-generator": "^7.1.0",
