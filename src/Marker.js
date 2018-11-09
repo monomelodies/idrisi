@@ -2,10 +2,13 @@
 "use strict";
 
 import { Marker } from 'mapbox-gl';
+import bindEvents from './Helpers/bindEvents';
+import proxyEvents from './Helpers/proxyEvents';
 
 const elementWm = new WeakMap();
 const scopeWm = new WeakMap();
 const onmapWm = new WeakMap();
+const events = ['dragstart', 'drag', 'dragend'];
 
 class controller {
 
@@ -44,15 +47,7 @@ class controller {
                 onmapWm.set(this, false);
             }
         });
-        if (this.onDragstart) {
-            marker.on('dragstart', () => this.onDragstart({marker}));
-        }
-        if (this.onDrag) {
-            marker.on('drag', () => this.onDrag({marker}));
-        }
-        if (this.onDragend) {
-            marker.on('dragend', () => this.onDragend({marker}));
-        }
+        proxyEvents.call(this, 'marker', marker, events);
     }
 
     ['$onDestroy']() {
@@ -71,17 +66,11 @@ export default angular.module('idrisi.marker', [])
         require: {
             parent: '^^idrisiMap'
         },
-        bindings: {
+        bindings: bindEvents({
             lngLat: '<',
             color: '@',
-            draggable: '<',
-            /**
-             * Event handlers. The marker is passed as "marker".
-             */
-            onDragstart: '&',
-            onDrag: '&',
-            onDragend: '&'
-        },
+            draggable: '<'
+        }, events),
         transclude: true,
         template: '<ng-transclude></ng-transclude>'
     })
