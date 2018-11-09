@@ -2,7 +2,10 @@
 "use strict";
 
 import { Popup } from 'mapbox-gl';
+import bindEvents from './Helpers/bindEvents';
+import proxyEvents from './Helpers/proxyEvents';
 
+const events = ['open', 'close'];
 const elementWm = new WeakMap();
 const popupWm = new WeakMap();
 const openWm = new WeakMap();
@@ -33,10 +36,8 @@ class controller {
         popup.setLngLat(this.parent.lngLat)
         popup.on('close', () => {
             openWm.set(this, false);
-            if (this.onClose) {
-                this.onClose();
-            }
         });
+        proxyEvents.call(this, 'popup', popup, events);
         popupWm.set(this, popup);
     }
 
@@ -57,9 +58,6 @@ class controller {
                 popup.addTo(this.parent.parent.map);
             } else if (open && !newvalue) {
                 popup.remove();
-                if (this.onClose) {
-                    this.onClose();
-                }
             }
         }
         openWm.set(this, newvalue);
@@ -87,7 +85,7 @@ export default angular.module('idrisi.popup', [])
         },
         transclude: true,
         template: '<ng-transclude/>',
-        bindings: {
+        bindings: bindEvents({
             closeButton: '<',
             closeOnClick: '<',
             anchor: '@',
@@ -97,12 +95,8 @@ export default angular.module('idrisi.popup', [])
              * Custom binding: true to show the popup. Using e.g. `ng-if` on the
              * component trips up MapboxGL.
              */
-            opened: '<',
-            /**
-             * Custom callback triggered on popup close. Useful for cleanup.
-             */
-            onClose: '&'
-        }
+            opened: '<'
+        }, events)
     })
     .name;
 
