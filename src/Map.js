@@ -29,9 +29,6 @@ class controller {
     constructor($element, $scope) {
         elementWm.set(this, $element);
         scopeWm.set(this, $scope);
-        $scope.$watch('$ctrl.center', newvalue => {
-            mapWm.get(this).setCenter(newvalue);
-        });
     }
 
     ['$onInit']() {
@@ -79,6 +76,12 @@ class controller {
         try {
             mapWm.set(this, new Map(options));
             mapWm.get(this).on('render', () => scopeWm.get(this).$apply());
+            const $scope = scopeWm.get(this);
+            $scope.$watch('$ctrl.center', newvalue => mapWm.get(this).setCenter(newvalue));
+            $scope.$watch('$ctrl.minZoom', newvalue => mapWm.get(this).setMinZoom(newvalue));
+            $scope.$watch('$ctrl.maxZoom', newvalue => mapWm.get(this).setMaxZoom(newvalue));
+            $scope.$watch('$ctrl.maxBounds', newvalue => mapWm.get(this).setMaxBounds(newvalue));
+            $scope.$watch('$ctrl.style', newvalue => mapWm.get(this).setStyle(newvalue));
             if (this.onMapLoaded) {
                 this.onMapLoaded({map: mapWm.get(this)});
             }
