@@ -74,16 +74,17 @@ class controller {
             options.maxBounds = this.maxBounds;
         }
         try {
-            mapWm.set(this, new Map(options));
-            mapWm.get(this).on('render', () => scopeWm.get(this).$apply());
+            const map = new Map(options);
+            mapWm.set(this, map);
             const $scope = scopeWm.get(this);
-            $scope.$watch('$ctrl.center', newvalue => mapWm.get(this).setCenter(newvalue));
-            $scope.$watch('$ctrl.minZoom', newvalue => mapWm.get(this).setMinZoom(newvalue));
-            $scope.$watch('$ctrl.maxZoom', newvalue => mapWm.get(this).setMaxZoom(newvalue));
-            $scope.$watch('$ctrl.maxBounds', newvalue => mapWm.get(this).setMaxBounds(newvalue));
-            $scope.$watch('$ctrl.style', newvalue => mapWm.get(this).setStyle(newvalue));
+            map.on('render', () => $scope.$apply());
+            $scope.$watch('$ctrl.center', newvalue => map.setCenter(newvalue));
+            $scope.$watch('$ctrl.minZoom', newvalue => map.setMinZoom(newvalue));
+            $scope.$watch('$ctrl.maxZoom', newvalue => map.setMaxZoom(newvalue));
+            $scope.$watch('$ctrl.maxBounds', newvalue => map.setMaxBounds(newvalue));
+            $scope.$watch('$ctrl.style', newvalue => map.setStyle(newvalue));
             if (this.onMapLoaded) {
-                this.onMapLoaded({map: mapWm.get(this)});
+                this.onMapLoaded({map: map});
             }
         } catch (error) {
             if (this.onWebglInitializationFailure) {
