@@ -2,8 +2,11 @@
 "use strict";
 
 import { GeolocateControl } from 'mapbox-gl';
+import bindEvents from '../Helpers/bindEvents';
+import proxyEvents from '../Helpers/proxyEvents';
 
 const wm = new WeakMap();
+const events = ['trackuserlocationstart', 'trackuserlocationend', 'geolocate', 'error'];
 
 class controller {
 
@@ -15,6 +18,7 @@ class controller {
             showUserLocation: this.showUserLocation === undefined ? true : !!this.showUserLocation
         }));
         this.parent.map.addControl(wm.get(this), this.location || 'top-right');
+        proxyEvents.call(this, 'geolocate', wm.get(this));
     }
 
     ['$onDestroy']() {
@@ -29,13 +33,13 @@ export default angular.module('idrisi.control.geolocate', [])
         require: {
             parent: '^^idrisiMap'
         },
-        bindings: {
+        bindings: bindEvents({
             positionOptions: '<',
             fitBoundsOptions: '<',
             trackUserLocation: '<',
             showUserLocation: '<',
             'location': '@'
-        }
+        }, events)
     })
     .name;
 
