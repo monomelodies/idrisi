@@ -7,6 +7,14 @@ const wm = new WeakMap();
 
 class controller {
 
+    constructor($scope) {
+        $scope.$watch('$ctrl.unit', newvalue => {
+            if (newvalue) {
+                wm.get(this).setUnit(newvalue);
+            }
+        });
+    }
+
     ['$onInit']() {
         wm.set(this, new ScaleControl({
             maxWidth: this.maxWidth == undefined ? 100 : parseInt(this.maxWidth),
@@ -20,6 +28,8 @@ class controller {
     }
 
 };
+
+controller.$inject = ['$scope'];
 
 export default angular.module('idrisi.control.scale', [])
     .component('idrisiScaleControl', {
