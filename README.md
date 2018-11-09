@@ -8,6 +8,19 @@ do as well) I'm focussing on the functions I actually need in my own projects.
 
 Feel free to contribute though!
 
+## Design goals
+- Implement 1-on-1 the Mapbox specification; constructor options are AngularJS
+  bindings per the usual `camelCase` to `hyphen-separated` schema;
+- Events can be bound prefixed with `on-`;
+- When attribute names conflict (e.g. `style`) prefix with `mapbox-`;
+
+This should in theory mean that you _only_ need the Mapbox documentation!
+
+## About the name
+"Mercator" was already taken, so I went for the famous Medieval Moroccan
+cartographer [https://nl.wikipedia.org/wiki/Muhammad_al-Idrisi](Muhammad
+al-Idrisi) instead.
+
 ## Installation
 ```sh
 npm install --save idrisi
@@ -63,4 +76,9 @@ marker instead of the default blueish pin.
 A popup for a marker. Should be contained in `idrisi-marker`. Adding the
 necessary `ng-if` or whatever is up to the implementor. All contents of the
 `popup` component are transcluded and used as HTML for inside the popup.
+
+## Todo and contributing
+This is far from complete; I started with the features I needed personally for a
+particular project. Feel free to contribute though! Please adhere to the coding
+style as used so far (I think it's pretty sensible).
 
