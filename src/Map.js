@@ -2,6 +2,53 @@
 
 import { Map } from 'mapbox-gl';
 import { LngLat } from 'mapbox-gl';
+import bindEvents from './Helpers/bindEvents';
+import proxyEvents from './Helpers/proxyEvents';
+
+const events = [
+    'resize',
+    'remove',
+    'mousedown',
+    'mouseup',
+    'mouseover',
+    'mousemove',
+    'click',
+    'dblclick',
+    'mouseenter',
+    'mouselease',
+    'mouseout',
+    'contextmenu',
+    'wheel',
+    'touchstart',
+    'touchcancel',
+    'movestart',
+    'move',
+    'moveend',
+    'dragstart',
+    'drag',
+    'dragend',
+    'zoomstart',
+    'zoomend',
+    'rotatestart',
+    'rotate',
+    'rotateend',
+    'pitchstart',
+    'pitch',
+    'pitchend',
+    'boxzoomstart',
+    'boxzoomend',
+    'boxzoomcancel',
+    'webglcontextlost',
+    'webglcontextrestored',
+    'load',
+    'error',
+    'data',
+    'styledata',
+    'sourcedata',
+    'dataloading',
+    'styledataloading',
+    'sourcedataloading'
+];
 
 if (!Map.prototype.contains) {
     Map.prototype.contains = function (lngLat) {
@@ -83,9 +130,7 @@ class controller {
             $scope.$watch('$ctrl.maxZoom', newvalue => newvalue && map.setMaxZoom(newvalue));
             $scope.$watch('$ctrl.maxBounds', newvalue => newvalue && map.setMaxBounds(newvalue));
             $scope.$watch('$ctrl.style', newvalue => newvalue && map.setStyle(newvalue));
-            if (this.onLoad) {
-                map.on('load', () => this.onLoad({map}));
-            }
+            proxyEvents.call(this, 'map', map, events);
         } catch (error) {
             if (this.onWebglInitializationFailure) {
                 this.onWebglInitializationFailure({error});
@@ -113,7 +158,7 @@ controller.$inject = ['$element', '$scope'];
 export default angular.module('idrisi.map', [])
     .component('idrisiMap', {
         controller,
-        bindings: {
+        bindings: bindEvents({
             id: '@',
             minZoom: '@',
             maxZoom: '@',
@@ -152,20 +197,12 @@ export default angular.module('idrisi.map', [])
             /**
              * @description
              *
-             * Custom binding called when the map is loaded. This is to allow
-             * calling controllers to interact with it. The map is passed as
-             * single argument `map`.
-             */
-            onLoad: '&',
-            /**
-             * @description
-             *
              * Custom error called when WebGL could not be initialized. Allows
              * for graceful error handling in the application. The error is
              * passed as argument `error`.
              */
             onWebglInitializationFailure: '&'
-        }
+        }, events);
     })
     .name;
 
