@@ -4,7 +4,6 @@ module.exports = function(config) {
         basePath: '',
         frameworks: ['browserify', 'jasmine'],
         files: [
-            'https://maps.googleapis.com/maps/api/js?sensor=false', //<--this one
             'tests/setup.js',
             {pattern: 'tests/*.spec.js', load: false}
         ],
