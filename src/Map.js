@@ -188,7 +188,7 @@ export default angular.module('idrisi.map', [])
             collectResourceTiming: '<',
             fadeDuration: '@',
             crossSourceCollisions: '<',
-        }, events);
+        }, events)
     })
     .name;
 
