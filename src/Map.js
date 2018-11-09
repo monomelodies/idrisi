@@ -83,8 +83,8 @@ class controller {
             $scope.$watch('$ctrl.maxZoom', newvalue => newvalue && map.setMaxZoom(newvalue));
             $scope.$watch('$ctrl.maxBounds', newvalue => newvalue && map.setMaxBounds(newvalue));
             $scope.$watch('$ctrl.style', newvalue => newvalue && map.setStyle(newvalue));
-            if (this.onMapLoaded) {
-                this.onMapLoaded({map: map});
+            if (this.onLoad) {
+                map.on('load', () => this.onLoad({map}));
             }
         } catch (error) {
             if (this.onWebglInitializationFailure) {
