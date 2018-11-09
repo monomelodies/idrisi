@@ -17,8 +17,8 @@ Feel free to contribute though!
 This should in theory mean that you _only_ need the Mapbox documentation!
 
 ## About the name
-"Mercator" was already taken, so I went for the famous Medieval Moroccan
-cartographer [https://nl.wikipedia.org/wiki/Muhammad_al-Idrisi](Muhammad
+"Mercator" was already taken, so I went for the famous Medieval Muslim
+cartographer [https://en.wikipedia.org/wiki/Muhammad_al-Idrisi](Muhammad
 al-Idrisi) instead.
 
 ## Installation
