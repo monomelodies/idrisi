@@ -5,7 +5,6 @@ module.exports = function(config) {
         frameworks: ['browserify', 'jasmine'],
         files: [
             'https://maps.googleapis.com/maps/api/js?sensor=false', //<--this one
-            'tests/mocks/maps.googleapis.com-maps-api.js', //<--and this one, changing path as necessary for the mock file you just added
             'tests/setup.js',
             {pattern: 'tests/*.spec.js', load: false}
         ],
