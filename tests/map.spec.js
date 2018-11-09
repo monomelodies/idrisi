@@ -21,13 +21,13 @@ describe('Map component', () => {
         scope = $rootScope.$new();
         $timeout = _$timeout_;
         $compile = _$compile_;
-        tpl = angular.element('<idrisi-map></sds-map>');
+        tpl = angular.element('<idrisi-map></idrisi-map>');
         element = $compile(tpl)(scope);
         scope.$digest();
     }));
 
-    it('does something', () => {
-        expect(true).toBe(true);
+    it('renders the map', () => {
+        expect(element.find('canvas').length).not.toBe(-1);
     });
 });
 
