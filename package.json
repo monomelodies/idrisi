@@ -7,6 +7,9 @@
     "test": "karma start",
     "build": "babel src --out-dir lib"
   },
+  "directories": {
+    "test": "tests"
+  },
   "repository": {
     "type": "git",
     "url": "ssh://git@barabas.sensimedia.nl/home/git/libraries/monomelodies/idrisi"
@@ -16,6 +19,9 @@
     "AngularJS"
   ],
   "author": "Marijn Ophorst <marijn@monomelodies.nl>",
+  "contributors": [
+    "Danny van der Veldt <dannyvanderveldt@hotmail.nl>"
+  ],
   "license": "MIT",
   "devDependencies": {
     "@babel/cli": "^7.1.2",
@@ -25,6 +31,14 @@
     "@babel/polyfill": "^7.0.0",
     "@babel/preset-env": "^7.1.0",
     "@babel/runtime": "^7.1.2",
-    "mapbox-gl": "^0.51.0-beta.2"
+    "babelify": "^10.0.0",
+    "browserify": "^16.2.3",
+    "jasmine-core": "^3.2.1",
+    "mapbox-gl": "^0.51.0-beta.2",
+    "karma": "^3.0.0",
+    "karma-babel-preprocessor": "^8.0.0-beta.0",
+    "karma-browserify": "^5.3.0",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-jasmine": "^1.1.2"
   }
 }
