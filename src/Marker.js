@@ -7,7 +7,6 @@ import proxyEvents from './Helpers/proxyEvents';
 
 const elementWm = new WeakMap();
 const scopeWm = new WeakMap();
-const onmapWm = new WeakMap();
 const events = ['dragstart', 'drag', 'dragend'];
 
 class controller {
@@ -35,17 +34,18 @@ class controller {
         }
         const marker = new Marker(options);
         marker.setLngLat(this.lngLat);
-        onmapWm.set(this, false);
+        console.log(this.lngLat);
         scopeWm.get(this).$watch('$ctrl.lngLat', newvalue => marker.setLngLat(newvalue));
         scopeWm.get(this).$watch('$ctrl.draggable', newvalue => marker.setDraggable(newvalue));
+        if (this.parent.map.contains(this.lngLat)) {
+            marker.addTo(this.parent.map);
+        }
         this.parent.map.on('render', () => {
             const contains = this.parent.map.contains(this.lngLat);
-            if (contains && !onmapWm.get(this)) {
+            if (contains) {
                 marker.addTo(this.parent.map);
-                onmapWm.set(this, true);
-            } else if (!contains && onmapWm.get(this)) {
+            } else if (!contains) {
                 marker.remove();
-                onmapWm.set(this, false);
             }
         });
         proxyEvents.call(this, 'marker', marker, events);
@@ -54,7 +54,6 @@ class controller {
     ['$onDestroy']() {
         elementWm.delete(this);
         scopeWm.delete(this);
-        onmapWm.delete(this);
     }
 
 };
