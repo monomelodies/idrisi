@@ -34,7 +34,6 @@ class controller {
         }
         const marker = new Marker(options);
         marker.setLngLat(this.lngLat);
-        console.log(this.lngLat);
         scopeWm.get(this).$watch('$ctrl.lngLat', newvalue => marker.setLngLat(newvalue));
         scopeWm.get(this).$watch('$ctrl.draggable', newvalue => marker.setDraggable(newvalue));
         if (this.parent.map.contains(this.lngLat)) {
