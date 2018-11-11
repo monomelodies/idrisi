@@ -1,6 +1,6 @@
 {
   "name": "idrisi",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "MapboxGL directives for AngularJS",
   "main": "lib/index.js",
   "scripts": {
