@@ -10,15 +10,15 @@ const elementWm = new WeakMap();
 const popupWm = new WeakMap();
 const openWm = new WeakMap();
 
-let $scope = undefined;
+let $rootScope = undefined;
 
 class controller {
 
-    constructor($element, _$scope_) {
+    constructor($element, _$rootScope_) {
         $element.css({display: 'none'});
         elementWm.set(this, $element);
         openWm.set(this, false);
-        $scope = _$scope_;
+        $rootScope = _$rootScope_;
     }
 
     ['$onInit']() {
@@ -38,7 +38,7 @@ class controller {
         const popup = new Popup(options);
         popup.setLngLat(this.parent.lngLat)
         popup.on('close', () => {
-            $scope.$apply(() => openWm.set(this, false));
+            $rootScope.$apply(() => openWm.set(this, false));
         });
         proxyEvents.call(this, 'popup', popup, events);
         popupWm.set(this, popup);
@@ -78,7 +78,7 @@ class controller {
 
 };
 
-controller.$inject = ['$element', '$scope'];
+controller.$inject = ['$element', '$rootScope'];
 
 export default angular.module('idrisi.popup', [])
     .component('idrisiPopup', {
