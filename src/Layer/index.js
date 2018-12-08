@@ -23,6 +23,7 @@ export default angular.module('idrisi.layer', [])
             filter: '<',
             layout: '<',
             paint: '<'
+        }
     })
     .name;
 
