@@ -125,9 +125,10 @@ class controller {
         const map = new Map(options);
         mapWm.set(this, map);
         const $scope = scopeWm.get(this);
-        map.on('render', () => $scope.$apply(() => {
+        map.on('load', () => $scope.$apply(() => {
             callbackWm.get(this).map(callbackFn => callbackFn());
         }));
+        map.on('render', () => $scope.$apply());
         $scope.$watch('$ctrl.center', newvalue => newvalue && map.setCenter(newvalue));
         $scope.$watch('$ctrl.minZoom', newvalue => newvalue && map.setMinZoom(newvalue));
         $scope.$watch('$ctrl.maxZoom', newvalue => newvalue && map.setMaxZoom(newvalue));
