@@ -65,6 +65,7 @@ if (!Map.prototype.contains) {
 const mapWm = new WeakMap();
 const elementWm = new WeakMap();
 const scopeWm = new WeakMap();
+const callbackWm = new WeakMap();
 
 /**
  * @description
@@ -76,6 +77,7 @@ class controller {
     constructor($element, $scope) {
         elementWm.set(this, $element);
         scopeWm.set(this, $scope);
+        callbackWm.set(this, []);
     }
 
     ['$onInit']() {
@@ -123,7 +125,9 @@ class controller {
         const map = new Map(options);
         mapWm.set(this, map);
         const $scope = scopeWm.get(this);
-        map.on('render', () => $scope.$apply());
+        map.on('render', () => $scope.$apply(() => {
+            callbackWm.get(this).map(callbackFn => callbackFn());
+        }));
         $scope.$watch('$ctrl.center', newvalue => newvalue && map.setCenter(newvalue));
         $scope.$watch('$ctrl.minZoom', newvalue => newvalue && map.setMinZoom(newvalue));
         $scope.$watch('$ctrl.maxZoom', newvalue => newvalue && map.setMaxZoom(newvalue));
@@ -143,6 +147,16 @@ class controller {
 
     set map(map) {
         mapWm.set(this, map);
+    }
+
+    registerCallback(callbackFn) {
+        if (this.map) {
+            callbackFn();
+        } else {
+            const callbacks = callbackWm.get(this);
+            callbacks.push(callbackFn);
+            callbackWm.set(this, callbacks);
+        }
     }
 
 };
