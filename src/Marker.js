@@ -19,7 +19,6 @@ class controller {
     }
 
     ['$postLink']() {
-        //const transcluded = wm.get(this)();
         const options = {
             anchor: this.anchor || 'center',
             color: this.color || '#3fb1ce',
