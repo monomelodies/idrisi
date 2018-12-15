@@ -37,11 +37,15 @@ class controller {
         }
         const popup = new Popup(options);
         popup.setLngLat(this.parent.lngLat)
-        popup.on('close', () => {
-            openWm.set(this, false);
-        });
         proxyEvents.call(this, 'popup', popup, events);
         popupWm.set(this, popup);
+        popup.on('close', () => {
+            if (this.onClose) {
+                openWm.set(this, false);
+            } else {
+                $rootScope.$apply(() => openWm.set(this, false));
+            }
+        });
     }
 
     ['$postLink']() {
