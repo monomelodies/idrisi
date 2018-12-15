@@ -38,7 +38,7 @@ class controller {
         const popup = new Popup(options);
         popup.setLngLat(this.parent.lngLat)
         popup.on('close', () => {
-            $rootScope.$apply(() => openWm.set(this, false));
+            openWm.set(this, false);
         });
         proxyEvents.call(this, 'popup', popup, events);
         popupWm.set(this, popup);
