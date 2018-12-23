@@ -13,7 +13,9 @@ class controller {
                 showCompass: this.showCompass === undefined ? true : !!this.showCompass,
                 showZoom: this.showZoom === undefined ? true : !!this.showZoom
             }));
-            this.parent.map.addControl(wm.get(this), this.location || 'top-right');
+            if (this.parent.map) {
+                this.parent.map.addControl(wm.get(this), this.location || 'top-right');
+            }
         } catch (error) {
             if (this.onWebglInitializationFailed) {
                 this.onWebglInitializationFailed({error});
