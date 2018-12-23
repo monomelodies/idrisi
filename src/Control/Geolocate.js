@@ -17,7 +17,9 @@ class controller {
             trackUserLocation: !!this.trackUserLocation,
             showUserLocation: this.showUserLocation === undefined ? true : !!this.showUserLocation
         }));
-        this.parent.map.addControl(wm.get(this), this.location || 'top-right');
+        if (this.parent.map) {
+            this.parent.map.addControl(wm.get(this), this.location || 'top-right');
+        }
         proxyEvents.call(this, 'geolocate', wm.get(this));
     }
 
