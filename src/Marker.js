@@ -36,17 +36,19 @@ class controller {
         scopeWm.get(this).$watch('$ctrl.lngLat', newvalue => marker.setLngLat(newvalue));
         scopeWm.get(this).$watch('$ctrl.draggable', newvalue => marker.setDraggable(newvalue));
         this.parent.registerCallback(() => {
-            if (this.parent.map.contains(this.lngLat)) {
-                marker.addTo(this.parent.map);
-            }
-            this.parent.map.on('render', () => {
-                const contains = this.parent.map.contains(this.lngLat);
-                if (contains) {
+            if (this.parent.map) {
+                if (this.parent.map.contains(this.lngLat)) {
                     marker.addTo(this.parent.map);
-                } else if (!contains) {
-                    marker.remove();
                 }
-            });
+                this.parent.map.on('render', () => {
+                    const contains = this.parent.map.contains(this.lngLat);
+                    if (contains) {
+                        marker.addTo(this.parent.map);
+                    } else if (!contains) {
+                        marker.remove();
+                    }
+                });
+            }
         });
         proxyEvents.call(this, 'marker', marker, events);
     }
