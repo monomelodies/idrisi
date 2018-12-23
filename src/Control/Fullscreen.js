@@ -9,7 +9,9 @@ class controller {
 
     ['$onInit']() {
         wm.set(this, new FullscreenControl());
-        this.parent.map.addControl(wm.get(this), this.location || 'top-right');
+        if (this.parent.map) {
+            this.parent.map.addControl(wm.get(this), this.location || 'top-right');
+        }
     }
 
     ['$onDestroy']() {
