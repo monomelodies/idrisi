@@ -13,7 +13,9 @@ class controller {
         if (this.customAttributions) {
             options.customAttributions = this.customAttributions;
         }
-        this.parent.map.addControl(new AttributionControl(options), this.location || 'top-right');
+        if (this.parent.map) {
+            this.parent.map.addControl(new AttributionControl(options), this.location || 'top-right');
+        }
     }
 
 };
