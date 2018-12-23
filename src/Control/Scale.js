@@ -20,7 +20,9 @@ class controller {
             maxWidth: this.maxWidth == undefined ? 100 : parseInt(this.maxWidth),
             unit: this.unit || 'metric'
         }));
-        this.parent.map.addControl(wm.get(this), this.location || 'top-right');
+        if (this.parent.map) {
+            this.parent.map.addControl(wm.get(this), this.location || 'top-right');
+        }
     }
 
     ['$onDestroy']() {
