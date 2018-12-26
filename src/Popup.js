@@ -1,7 +1,6 @@
 
 "use strict";
 
-import { Popup } from 'mapbox-gl';
 import bindEvents from './Helpers/bindEvents';
 import proxyEvents from './Helpers/proxyEvents';
 
@@ -35,7 +34,7 @@ class controller {
         if (this.className) {
             options.className = this.className;
         }
-        const popup = new Popup(options);
+        const popup = new window.mapboxgl.Popup(options);
         popup.setLngLat(this.parent.lngLat)
         proxyEvents.call(this, 'popup', popup, events);
         popupWm.set(this, popup);
