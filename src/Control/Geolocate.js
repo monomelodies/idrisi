@@ -1,7 +1,6 @@
 
 "use strict";
 
-import { GeolocateControl } from 'mapbox-gl';
 import bindEvents from '../Helpers/bindEvents';
 import proxyEvents from '../Helpers/proxyEvents';
 
@@ -11,7 +10,7 @@ const events = ['trackuserlocationstart', 'trackuserlocationend', 'geolocate', '
 class controller {
 
     ['$onInit']() {
-        wm.set(this, new GeolocateControl({
+        wm.set(this, new window.mapboxgl.GeolocateControl({
             positionOptions: this.positionOptions || {enableHighAccuracy: false, timeout: 6000},
             fitBoundsOptions: this.fitBoundsOptions || {maxZoom: 15},
             trackUserLocation: !!this.trackUserLocation,
