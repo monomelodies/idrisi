@@ -1,7 +1,5 @@
 "use strict";
 
-import { Map } from 'mapbox-gl';
-import { LngLat } from 'mapbox-gl';
 import bindEvents from './Helpers/bindEvents';
 import proxyEvents from './Helpers/proxyEvents';
 
@@ -50,18 +48,6 @@ const events = [
     'sourcedataloading'
 ];
 
-if (!Map.prototype.contains) {
-    Map.prototype.contains = function (lngLat) {
-        const bounds = this.getBounds();
-        const southWest = bounds.getSouthWest();
-        const northEast = bounds.getNorthEast();
-        if (angular.isArray(lngLat)) {
-            lngLat = new LngLat(lngLat[0], lngLat[1]);
-        }
-        return lngLat.lng >= southWest.lng && lngLat.lat >= southWest.lat && lngLat.lng <= northEast.lng && lngLat.lat <= northEast.lat;
-    };
-}
-
 const mapWm = new WeakMap();
 const elementWm = new WeakMap();
 const scopeWm = new WeakMap();
@@ -78,6 +64,17 @@ class controller {
         elementWm.set(this, $element);
         scopeWm.set(this, $scope);
         callbackWm.set(this, []);
+        if (!window.mapboxgl.Map.prototype.contains) {
+            window.mapboxgl.Map.prototype.contains = function (lngLat) {
+                const bounds = this.getBounds();
+                const southWest = bounds.getSouthWest();
+                const northEast = bounds.getNorthEast();
+                if (angular.isArray(lngLat)) {
+                    lngLat = new window.mapboxgl.LngLat(lngLat[0], lngLat[1]);
+                }
+                return lngLat.lng >= southWest.lng && lngLat.lat >= southWest.lat && lngLat.lng <= northEast.lng && lngLat.lat <= northEast.lat;
+            };
+        }
     }
 
     ['$onInit']() {
@@ -122,7 +119,7 @@ class controller {
         if (this.maxBounds !== undefined) {
             options.maxBounds = this.maxBounds;
         }
-        const map = new Map(options);
+        const map = new window.mapboxgl.Map(options);
         mapWm.set(this, map);
         const $scope = scopeWm.get(this);
         map.on('load', () => $scope.$apply(() => {
