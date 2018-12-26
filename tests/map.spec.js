@@ -27,7 +27,7 @@ describe('Map component', () => {
     }));
 
     it('renders the map', () => {
-        expect(element.find('canvas').length).not.toBe(-1);
+        expect(element.find('canvas').length).not.toBe(0);
     });
 });
 
