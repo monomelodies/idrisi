@@ -1,14 +1,12 @@
 
 "use strict";
 
-import { FullscreenControl } from 'mapbox-gl';
-
 const wm = new WeakMap();
 
 class controller {
 
     ['$onInit']() {
-        wm.set(this, new FullscreenControl());
+        wm.set(this, new window.mapboxgl.FullscreenControl());
         if (this.parent.map) {
             this.parent.map.addControl(wm.get(this), this.location || 'top-right');
         }
