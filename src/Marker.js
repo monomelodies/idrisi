@@ -1,7 +1,6 @@
 
 "use strict";
 
-import { Marker } from 'mapbox-gl';
 import bindEvents from './Helpers/bindEvents';
 import proxyEvents from './Helpers/proxyEvents';
 
@@ -31,7 +30,7 @@ class controller {
         if (this.offset) {
             options.offset = this.offset;
         }
-        const marker = new Marker(options);
+        const marker = new window.mapboxgl.Marker(options);
         marker.setLngLat(this.lngLat);
         scopeWm.get(this).$watch('$ctrl.lngLat', newvalue => marker.setLngLat(newvalue));
         scopeWm.get(this).$watch('$ctrl.draggable', newvalue => marker.setDraggable(newvalue));
