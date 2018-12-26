@@ -3,6 +3,7 @@
 
 require('angular');
 require('angular-mocks');
+require('./mock');
 
 angular.module('tests', [])
     .config(['$httpProvider', $httpProvider => {
