@@ -13,7 +13,7 @@ function Transform() {
     }
 };
 
-window.mapboxgl.Map = function () {
+window.mapboxgl.Map = function (options) {
     this.transform = new Transform();
     this.on = noop;
     this.off = noop;
@@ -21,8 +21,12 @@ window.mapboxgl.Map = function () {
     this.getBounds = function () {
         return new window.mapboxgl.LngLatBounds([-1, -1], [1, 1]);
     };
+    var div = document.createElement('div');
+    var canvas = document.createElement('canvas');
+    div.appendChild(canvas);
+    options.container.appendChild(div);
     this.getCanvasContainer = function () {
-        return document.createElement('div');
+        return div;
     };
     this.setCenter = noop;
     this.setStyle = noop;
