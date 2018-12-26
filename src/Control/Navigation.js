@@ -1,15 +1,13 @@
 
 "use strict";
 
-import { NavigationControl } from 'mapbox-gl';
-
 const wm = new WeakMap();
 
 class controller {
 
     ['$onInit']() {
         try {
-            wm.set(this, new NavigationControl({
+            wm.set(this, new window.mapboxgl.NavigationControl({
                 showCompass: this.showCompass === undefined ? true : !!this.showCompass,
                 showZoom: this.showZoom === undefined ? true : !!this.showZoom
             }));
