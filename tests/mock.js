@@ -10,7 +10,20 @@ function FakeControl() {
 function Transform() {
     this.renderWorldCopies = {
         _add: noop
-    }
+    };
+    this.center = new window.mapboxgl.LngLat(0, 0);
+    this.locationPoint = function (lnglat) {
+        return new Point();
+    };
+    this.project = function (lnglat) {
+        return new Point();
+    };
+};
+
+function Point() {
+    this._add = function (Point) {
+        return Point;
+    };
 };
 
 window.mapboxgl.Map = function (options) {
@@ -33,7 +46,10 @@ window.mapboxgl.Map = function (options) {
     this.getRenderWorldCopies = function () {
         return this.transform.renderWorldCopies;
     };
-    this.project = noop;
+    this.project = function (lnglat) {
+        return this.transform.locationPoint(window.mapboxgl.LngLat.convert(lnglat));
+    };
+    this.setMinZoom = noop;
 };
 /*,
     Marker: function () {
