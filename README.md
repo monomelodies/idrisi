@@ -77,8 +77,28 @@ A popup for a marker. Should be contained in `idrisi-marker`. Adding the
 necessary `ng-if` or whatever is up to the implementor. All contents of the
 `popup` component are transcluded and used as HTML for inside the popup.
 
+### `idrisi-source`
+Defines a "source" with points on the map. Mostly used in conjunction with
+layers.
+
+### `idrisi-layer`
+A custom layer. See below for an example.
+
 ## Todo and contributing
 This is far from complete; I started with the features I needed personally for a
 particular project. Feel free to contribute though! Please adhere to the coding
 style as used so far (I think it's pretty sensible).
+
+## Example: clustering points on a map
+Given a map, add a source and within that one or more layers (the layers
+automatically use the parent source as their source). This is basically the
+`Idrisi` version of the example given in the MapboxGL documentation here:
+(https://www.mapbox.com/mapbox-gl-js/example/cluster/)[https://www.mapbox.com/mapbox-gl-js/example/cluster/]
+
+```html
+<idrisi-map center="[0, 0]">
+    <idrisi-source id="exampleSource" type="geojson" data="someData" cluster="true" cluster-max-zoom="14" cluster-radius="50">
+        <idrisi-layer id="exampleLayer" type="circle" filter="['has', 'point_count']" paint="somePaint"></idrisi-layer>
+    </idrisi-source>
+</idrisi-map>
 
