@@ -8,7 +8,7 @@ export default angular.module('idrisi.layer', [])
     .component('idrisiLayer', {
         controller,
         required: {
-            parent: '^^idrisiMap'
+            parent: '^^idrisiSource'
         },
         bindings: {
             id: '@',
