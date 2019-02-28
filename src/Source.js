@@ -26,6 +26,15 @@ class controller {
         });
     }
 
+    get data() {
+        return this._data;
+    }
+
+    set data(data) {
+        console.log('in data', data);
+        this._data = data;
+    }
+
 };
 
 controller.$inject = ['$scope'];
