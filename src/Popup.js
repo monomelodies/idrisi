@@ -51,7 +51,9 @@ class controller {
         if (this.opened) {
             const popup = popupWm.get(this);
             popup.setHTML(elementWm.get(this)[0].firstChild.innerHTML);
-            popup.addTo(this.parent.parent.map);
+            if (this.parent.parent.map) {
+                popup.addTo(this.parent.parent.map);
+            }
         }
     }
 
@@ -61,7 +63,9 @@ class controller {
         if (popup) {
             if (newvalue && !open) {
                 popup.setHTML(elementWm.get(this)[0].firstChild.innerHTML);
-                popup.addTo(this.parent.parent.map);
+                if (this.parent.parent.map) {
+                    popup.addTo(this.parent.parent.map);
+                }
             } else if (open && !newvalue) {
                 popup.remove();
             }
