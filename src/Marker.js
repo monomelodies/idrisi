@@ -31,7 +31,12 @@ class controller {
             options.offset = this.offset;
         }
         const marker = new window.mapboxgl.Marker(options);
-        marker.setLngLat(this.lngLat);
+        try {
+            marker.setLngLat(this.lngLat);
+        } catch (Error) {
+            console.error('Invalid lngLat value', this.lngLast);
+            return;
+        }
         scopeWm.get(this).$watch('$ctrl.lngLat', newvalue => marker.setLngLat(newvalue));
         scopeWm.get(this).$watch('$ctrl.draggable', newvalue => marker.setDraggable(newvalue));
         this.parent.registerCallback(() => {
