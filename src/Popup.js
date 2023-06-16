@@ -35,7 +35,10 @@ class controller {
             options.className = this.className;
         }
         const popup = new window.mapboxgl.Popup(options);
-        popup.setLngLat(this.parent.lngLat)
+        try {
+            popup.setLngLat(this.parent.lngLat);
+        } catch (Error) {
+        }
         proxyEvents.call(this, 'popup', popup, events);
         popupWm.set(this, popup);
         popup.on('close', () => {
